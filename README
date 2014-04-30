@@ -1,6 +1,8 @@
 This is a C++ implementation of the cover tree datastructure. Implements the
 cover tree algorithms for insert, removal, and k-nearest-neighbor search.
 
+For the original code, see: http://archive.today/Wx1i
+
 To build simply type make in the terminal from the project directory. Do
 ./test to run the tests. Look in test.cc for example code of how to use the
 cover tree.
