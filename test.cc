@@ -1,6 +1,8 @@
 #include "Cover_Tree_Point.h"
 #include "Cover_Tree.h"
 
+// test comment
+
 #include <vector>
 #include <iostream>
 #include <cstdlib>
