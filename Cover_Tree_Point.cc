@@ -10,13 +10,13 @@ double CoverTreePoint::distance(const CoverTreePoint& p) const {
     //if(timescalled%1000000==0) cout << timescalled << "\n";
     timescalled++;
     const vector<double>& vec=p.getVec();
-    double dist=0;
+    double dist = 0;
     int lim = vec.size();
-    for(int i=0; i<lim;i++) {
+    for(int i = 0; i < lim;i++) {
         double d = vec[i]-_vec[i];
-        dist+=d*d;
+        dist += d*d;
     }
-    dist=sqrt(dist);
+    dist = sqrt(dist);
     return dist;
 }
 
@@ -31,12 +31,12 @@ const char& CoverTreePoint::getChar() const {
 void CoverTreePoint::print() const {
     vector<double>::const_iterator it;
     cout << "point " << _name << ": ";
-    for(it=_vec.begin();it!=_vec.end();it++) {
+    for(it = _vec.begin(); it != _vec.end(); it++) {
         cout << *it << " ";
     }
     cout << "\n";
 }
 
 bool CoverTreePoint::operator==(const CoverTreePoint& p) const {
-    return (_vec==p.getVec() && _name==p.getChar());
+    return (_vec == p.getVec() && _name == p.getChar());
 }
