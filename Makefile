@@ -9,4 +9,4 @@ test: test.cc Cover_Tree.h Cover_Tree_Point.o Cover_Tree_Point.h Cover_Tree_Poin
 	g++ $(FLAGS) -o test test.cc Cover_Tree.h Cover_Tree_Point.o
 
 clean:
-	rm *.o
+	rm -f *.o test
