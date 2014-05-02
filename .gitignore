@@ -1,3 +1,5 @@
 *.o
 test
 paper.pdf
+sparse_data
+datasets
