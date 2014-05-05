@@ -11,7 +11,8 @@ Relevant links:
 https://secure.wikimedia.org/wikipedia/en/wiki/Cover_tree - Wikipedia's page
 on cover trees.
 http://hunch.net/~jl/projects/cover_tree/cover_tree.html - John Langford's (one
-of the inventors of cover trees) page on cover trees with links to papers.
+of the inventors of cover trees) page on cover trees with links to papers. His
+implementation can be found in the langford/ directory.
 
 To use the Cover Tree, you must implement your own Point class. CoverTreePoint
 is provided for testing and as an example. Your Point class must implement the
