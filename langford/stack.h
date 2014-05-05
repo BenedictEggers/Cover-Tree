@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+// Why is there a custom vector class??
+
 template<class T> class v_array{
  public:
   int index;
