@@ -30,9 +30,6 @@ void testTree() {
     vector<CoverTreePoint>
         points = cTree.kNearestNeighbors(CoverTreePoint(a,'a'),5);
     bool kNNGood=true;
-    //for(int i =0; i<points.size(); i++) {
-    //    points[i].print();
-    //}
     a[0]=2.1; if(!(CoverTreePoint(a,'a')==points[0])) kNNGood=false;
     a[0]=2.5; if(!(CoverTreePoint(a,'a')==points[1])) kNNGood=false;
     a[0]=1.1; if(!(CoverTreePoint(a,'a')==points[2])) kNNGood=false;
@@ -68,9 +65,12 @@ void testTree() {
     //node in cTree, but it is a different point, so the removal should not
     //alter the tree at all.
     points = cTree.kNearestNeighbors(CoverTreePoint(a,'c'),1);
-    if(points[0]==CoverTreePoint(a,'a') && cTree.isValidTree()) cout << "Remove differently-named point test: \tPassed\n";
-    else cout << "Remove differently-named point test: \tFailed\n";
-    
+    if(points[0]==CoverTreePoint(a,'a') && cTree.isValidTree()){
+        cout << "Remove differently-named point test: \tPassed\n";
+    } else {
+        cout << "Remove differently-named point test: \tFailed\n";
+    }
+
     a[0]=3.2;  cTree.remove(CoverTreePoint(a,'a'));
     a[0]=1.1;  cTree.remove(CoverTreePoint(a,'a'));
     a[0]=2.5;  cTree.remove(CoverTreePoint(a,'a'));
