@@ -5,8 +5,14 @@
 // parameter, and gathers statistics about the structure of the tree. Or at least,
 // that's what it WILL do...
 
+#include <vector>
+#include <iostream>
+
 #include "./Cover_Tree.h"
 #include "./Cover_Tree_Point.h"
+
+
+using namespace std;
 
 // Reads in the file, and creates Cover_Tree_Points from its contents. The file 
 // must be formatted as follows:
@@ -24,11 +30,11 @@ vector<Cover_Tree_Point> readFile(FILE *f);
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
-		printf("Put in a data file! Noob.\n");
+		cout << "Put in a data file! Noob.";
 		exit(1);
 	}
 }
 
-vector<Cover_Tree_Point> readFile(FILE *f) {
-
+vector<Cover_Tree_Point>& readFile(FILE *f) {
+	return new vector<Cover_Tree_Point>();
 }
