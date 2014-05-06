@@ -6,9 +6,6 @@
 using namespace std;
 
 double CoverTreePoint::distance(const CoverTreePoint& p) const {
-    static int timescalled = 0;
-    //if(timescalled%1000000==0) cout << timescalled << "\n";
-    timescalled++;
     const vector<double>& vec=p.getVec();
     double dist = 0;
     int lim = vec.size();
