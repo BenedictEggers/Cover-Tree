@@ -6,22 +6,21 @@
 using namespace std;
 
 double CoverTreePoint::distance(const CoverTreePoint& p) const {
-    const vector<double>& vec=p.getVec();
+    const vector<double>& otherVec = p.getVec();
     double dist = 0;
-    int lim = vec.size();
-    for(int i = 0; i < lim;i++) {
-        double d = vec[i]-_vec[i];
+    int lim = otherVec.size();
+    for (int i = 0; i < lim; i++) {
+        double d = otherVec[i] - _vec[i];
         dist += d*d;
     }
-    dist = sqrt(dist);
-    return dist;
+    return sqrt(dist);
 }
 
 const vector<double>& CoverTreePoint::getVec() const {
     return _vec;
 }
 
-const char& CoverTreePoint::getChar() const {
+char CoverTreePoint::getChar() const {
     return _name;
 }
 

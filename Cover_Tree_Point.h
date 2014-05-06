@@ -15,7 +15,7 @@ public:
     CoverTreePoint(std::vector<double> v, char name) : _vec(v), _name(name) {}
     double distance(const CoverTreePoint& p) const;
     const std::vector<double>& getVec() const;
-    const char& getChar() const;
+    char getChar() const;
     void print() const;
     bool operator==(const CoverTreePoint&) const;
 };
