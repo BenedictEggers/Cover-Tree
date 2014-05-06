@@ -117,44 +117,51 @@ v_array<point > parse_points(FILE *input)
   v_array<point > parsed;
   char c;
   v_array<float> p;
-  while ( (c = getc(input)) != EOF )
-    {
-      ungetc(c,input);
-      
-      while ((c = getc(input)) != '\n' )
-	{
-	  while (c != '0' && c != '1' && c != '2' && c != '3' 
-		 && c != '4' && c != '5' && c != '6' && c != '7' 
-		 && c != '8' && c != '9' && c != '\n' && c != EOF && c != '-')
-	    c = getc(input);
-	  if (c != '\n' && c != EOF) {
-	    ungetc(c,input);
-	    float f;
-	    fscanf(input, "%f",&f);
-	    push(p,f);
-	  }
-	  else 
-	    if (c == '\n') 
-	      ungetc(c,input);
-	}
+  while ( (c = getc(input)) != EOF ) {
 
-      if (p.index %8 > 0)
-	for (int i = 8 - p.index %8; i> 0; i--)
-	  push(p,(float) 0.);
-      float *new_p;
-      posix_memalign((void **)&new_p, 16, p.index*sizeof(float));
-      memcpy(new_p,p.elements,sizeof(float)*p.index);
+    ungetc(c,input);
+        
+    while ((c = getc(input)) != '\n' ) {
+  	  
+      while (c != '0' && c != '1' && c != '2' && c != '3' 
+  		 && c != '4' && c != '5' && c != '6' && c != '7' 
+  		 && c != '8' && c != '9' && c != '\n' && c != EOF && c != '-') {
+  	    c = getc(input);
+      }
 
-      if (point_len > 0 && point_len != p.index)
-	{
-	  printf("Can't handle vectors of differing length, bailing\n");
-	  exit(0);
-	}      
 
-      point_len = p.index;
-      p.index = 0;
-      push(parsed,new_p);
+  	  if (c != '\n' && c != EOF) {
+  	    ungetc(c,input);
+  	    float f;
+  	    fscanf(input, "%f",&f);
+  	    push(p,f);
+  	  } else if (c == '\n') {
+  	      ungetc(c,input);
+      }
+
+
+
+        if (p.index %8 > 0)
+  	for (int i = 8 - p.index %8; i> 0; i--)
+  	  push(p,(float) 0.);
+    
+        float *new_p;
+        posix_memalign((void **)&new_p, 16, p.index*sizeof(float));
+        memcpy(new_p,p.elements,sizeof(float)*p.index);
+
+        if (point_len > 0 && point_len != p.index)
+  	{
+  	  printf("Can't handle vectors of differing length, bailing\n");
+  	  exit(0);
+  	}      
+
+        point_len = p.index;
+        p.index = 0;
+        push(parsed,new_p);
+     
+
     }
+
   return parsed;
 }
 
