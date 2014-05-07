@@ -13,6 +13,8 @@ private:
     char _name;
 public:
     CoverTreePoint(std::vector<double> v, char name) : _vec(v), _name(name) {}
+    // Euclidean distance. If one of the points is higher-dimensional than the
+    // other, will pad the other with 0's.
     double distance(const CoverTreePoint& p) const;
     const std::vector<double>& getVec() const;
     char getChar() const;
