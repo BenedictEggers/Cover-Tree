@@ -12,4 +12,4 @@ stats: statistics.cc Cover_Tree.h Cover_Tree_Point.o
 	g++ $(FLAGS) -o statistics statistics.cc Cover_Tree_Point.o
 
 clean:
-	rm -f *.o test
+	rm -f *.o test statistics
