@@ -54,16 +54,47 @@ int main(int argc, char **argv) {
 vector<CoverTreePoint> *parse_points(ifstream& f) {
 	vector<CoverTreePoint> *p = new vector<CoverTreePoint>;  // to return
 	vector<double> point;  // to point to the point before we push it on the vector
-	double f;  // to hold the new coordinate
+	double d;  // to hold the new coordinate
 	string line;  // to hold the line we just read
 
 	// Now read until we're done
 	while(!f.eof) {
-		getline(f, line);  // next line
-		while(isOkay(str.at(0))) {
+
+		// get the next line
+		getline(f, line);
+
+		// make "point" empty so it's actually a new point
+		point = vector<double>();
+
+		// Iterate through all the things in the string (arbitrary sequences of
+		// characters with some doubles thrown in)
+		while (!line.empty) {
+			while (!isOkay(str.at(0))) {
+				// cut off the first character until it's something we want
+				line = line.substr(1);
+			}
+
+			// we're possibly at the end of the file
+			if (line.at(0) != '\n' && line.at(0) != EOF) {
+				// Now we've cut off the crap at the front, and can actually get a double
+				d = stod(line, &d);
+
+				// And stick in on our vector
+				point.push_back(d);
+			}
 			
 		}
+
+		// Now put our beautiful new point onto our points vector
+		p->push_back(point);
+
 	}
 	
 	return p;
+}
+
+// Returns whether the passed character is "okay", i.e. whether it represents
+// the start of a number we should process instead of throwing away
+static bool isOkay(char c) {
+
 }
