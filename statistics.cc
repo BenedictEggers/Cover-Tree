@@ -11,6 +11,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -42,7 +43,7 @@ int main(int argc, char **argv) {
 		exit(1);	
 	}
 
-	vector<CoverTreePoint> vec = parse_points(dataFile);
+	vector<CoverTreePoint> *vec = parse_points(dataFile);
 	dataFile.close();
 
 	// Now process the data somehow
@@ -50,10 +51,19 @@ int main(int argc, char **argv) {
 	exit(0);
 }
 
-vector<CoverTreePoint>& parse_points(ifstream& f) {
-	vector<CoverTreePoint> *p = new vector<CoverTreePoint>;
-	double f;
+vector<CoverTreePoint> *parse_points(ifstream& f) {
+	vector<CoverTreePoint> *p = new vector<CoverTreePoint>;  // to return
+	vector<double> point;  // to point to the point before we push it on the vector
+	double f;  // to hold the new coordinate
+	string line;  // to hold the line we just read
+
+	// Now read until we're done
+	while(!f.eof) {
+		getline(f, line);  // next line
+		while(isOkay(str.at(0))) {
+			
+		}
+	}
 	
-	
-	return *p;
+	return p;
 }
