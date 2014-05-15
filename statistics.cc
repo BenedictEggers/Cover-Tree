@@ -25,7 +25,7 @@ using namespace std;
 //  - The nth number of each line defines that point's position on the nth axis
 //
 // Returns a vector<CoverTreePoint> representing all the points in the file.
-vector<CoverTreePoint>& parse_points(ifstream& f);
+vector<CoverTreePoint> *parse_points(ifstream& f);
 
 // Returns whether the passed character is "okay", i.e. whether it represents
 // the start of a number we should process instead of throwing away
@@ -61,7 +61,7 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 	string line;  // to hold the line we just read
 
 	// Now read until we're done
-	while(!f.eof) {
+	while(!f.eof()) {
 
 		// get the next line
 		getline(f, line);
@@ -71,8 +71,8 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 
 		// Iterate through all the things in the string (arbitrary sequences of
 		// characters with some doubles thrown in)
-		while (!line.empty) {
-			while (keepIterating(str.at(0))) {
+		while (!line.empty()) {
+			while (keepIterating(line.at(0))) {
 				// cut off the first character until it's something we want
 				line = line.substr(1);
 			}
@@ -89,7 +89,7 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 		}
 
 		// Now put our beautiful new point onto our points vector
-		p->push_back(point);
+		p->push_back(CoverTreePoint(point, 'a'));
 
 	}
 	
