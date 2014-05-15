@@ -27,6 +27,9 @@ using namespace std;
 // Returns a vector<CoverTreePoint> representing all the points in the file.
 vector<CoverTreePoint>& parse_points(ifstream& f);
 
+// Returns whether the passed character is "okay", i.e. whether it represents
+// the start of a number we should process instead of throwing away
+static bool keepIterating(char c);
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
@@ -93,8 +96,6 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 	return p;
 }
 
-// Returns whether the passed character is "okay", i.e. whether it represents
-// the start of a number we should process instead of throwing away
 static bool keepIterating(char c) {
 	return c != '0' && c != '1' && c != '2' && c != '3' 
   		 && c != '4' && c != '5' && c != '6' && c != '7' 
