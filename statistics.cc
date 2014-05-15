@@ -24,17 +24,15 @@ using namespace std;
 //  - The nth number of each line defines that point's position on the nth axis
 //
 // Returns a vector<CoverTreePoint> representing all the points in the file.
-vector<CoverTreePoint>& parse_points(ifstream& f) {
-	vector<CoverTreePoint> *p = new vector<CoverTreePoint>;
+vector<CoverTreePoint>& parse_points(ifstream& f);
 
-	return *p;
-}
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
 		cout << "Put in a data file! Noob." << endl;
 		exit(1);
 	}
+
 	// Let's try to open the file
 	ifstream dataFile(argv[1]);
 	if (!dataFile.is_open()) {
@@ -43,7 +41,19 @@ int main(int argc, char **argv) {
 		dataFile.close();
 		exit(1);	
 	}
+
 	vector<CoverTreePoint> vec = parse_points(dataFile);
 	dataFile.close();
+
+	// Now process the data somehow
+
 	exit(0);
+}
+
+vector<CoverTreePoint>& parse_points(ifstream& f) {
+	vector<CoverTreePoint> *p = new vector<CoverTreePoint>;
+	double f;
+	
+	
+	return *p;
 }
