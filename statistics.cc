@@ -69,7 +69,7 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 		// Iterate through all the things in the string (arbitrary sequences of
 		// characters with some doubles thrown in)
 		while (!line.empty) {
-			while (!isOkay(str.at(0))) {
+			while (keepIterating(str.at(0))) {
 				// cut off the first character until it's something we want
 				line = line.substr(1);
 			}
@@ -95,6 +95,8 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 
 // Returns whether the passed character is "okay", i.e. whether it represents
 // the start of a number we should process instead of throwing away
-static bool isOkay(char c) {
-
+static bool keepIterating(char c) {
+	return c != '0' && c != '1' && c != '2' && c != '3' 
+  		 && c != '4' && c != '5' && c != '6' && c != '7' 
+  		 && c != '8' && c != '9' && c != '\n' && c != EOF && c != '-';
 }
