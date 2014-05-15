@@ -51,7 +51,6 @@ int main(int argc, char **argv) {
 
 	// Now process the data somehow
 
-	exit(0);
 }
 
 vector<CoverTreePoint> *parse_points(ifstream& f) {
@@ -59,6 +58,7 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 	vector<double> point;  // to point to the point before we push it on the vector
 	double d;  // to hold the new coordinate
 	string line;  // to hold the line we just read
+	size_t parsed;  // to hold how far in the string we parsed
 
 	// Now read until we're done
 	while(!f.eof()) {
@@ -80,12 +80,14 @@ vector<CoverTreePoint> *parse_points(ifstream& f) {
 			// we're possibly at the end of the file
 			if (line.at(0) != '\n' && line.at(0) != EOF) {
 				// Now we've cut off the crap at the front, and can actually get a double
-				d = stod(line, &d);
+				d = std::stod(line, &parsed);
+
+				// And move forward in our string
+				line = line.substr(parsed);
 
 				// And stick in on our vector
 				point.push_back(d);
 			}
-			
 		}
 
 		// Now put our beautiful new point onto our points vector

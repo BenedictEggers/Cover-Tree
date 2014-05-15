@@ -1,4 +1,4 @@
-FLAGS=-Wall -O3 -ffast-math -funroll-loops
+FLAGS=-Wall -O3 -std=gnu++11 -ffast-math -funroll-loops
 
 all: test stats
 
