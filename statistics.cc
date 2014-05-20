@@ -57,6 +57,8 @@ int main(int argc, char **argv) {
 
 	cout << "MaxDist: " << maxDist << endl;
 
+	CoverTree<CoverTreePoint> *tree = new CoverTree<CoverTreePoint>(maxDist, *vec);
+
 	// Now process the data somehow
 
 }
