@@ -31,6 +31,10 @@ vector<CoverTreePoint> *parse_points(ifstream& f);
 // the start of a number we should process instead of throwing away
 static bool keepIterating(char c);
 
+// Finds the max distance between any two points in the passed vector of
+// CoverTreePoints. Be careful, runs in time O(n*n)
+static double getMaxDist(vector<CoverTreePoint> *vec);
+
 int main(int argc, char **argv) {
 	if (argc != 2) {
 		cout << "Put in a data file! Noob." << endl;
@@ -48,6 +52,10 @@ int main(int argc, char **argv) {
 
 	vector<CoverTreePoint> *vec = parse_points(dataFile);
 	dataFile.close();
+
+	double maxDist = getMaxDist(vec);
+
+	cout << "MaxDist: " << maxDist << endl;
 
 	// Now process the data somehow
 
@@ -102,4 +110,17 @@ static bool keepIterating(char c) {
 	return c != '0' && c != '1' && c != '2' && c != '3' 
   		 && c != '4' && c != '5' && c != '6' && c != '7' 
   		 && c != '8' && c != '9' && c != '\n' && c != EOF && c != '-';
+}
+
+static double getMaxDist(vector<CoverTreePoint> *vec) {
+	double max = 0;
+	for (uint i = 0; i < vec->size(); i++) {
+		for (uint j = 0; j < vec->size(); j++) {
+			double dist = (*vec)[i].distance((*vec)[j]);
+			if (max < dist) {
+				max = dist;
+			}
+		}
+	}
+	return max;
 }
