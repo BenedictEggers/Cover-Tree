@@ -3,7 +3,6 @@
  * All Rights Reserved
  *
  * Written by David Crane <dncrane@gmail.com
- * Modified by Ben Eggers <ben.eggers36@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License v3 as
