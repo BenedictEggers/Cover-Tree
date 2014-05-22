@@ -60,6 +60,7 @@ int main(int argc, char **argv) {
 	CoverTree<CoverTreePoint> *tree = new CoverTree<CoverTreePoint>(maxDist, *vec);
 
 	// Now process the data somehow
+	// That part's important...
 
 }
 
