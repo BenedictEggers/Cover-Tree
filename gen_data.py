@@ -11,7 +11,7 @@ import random
 import math
 import uuid
 import heapq
-
+import sys
 
 
 # These are needed by all the recursive calls (globals suck, I know, but it's nice
@@ -22,7 +22,7 @@ RADIUS_SCALE = 4
 # How many sub-ball recursions we should try. Note that there will likely be fewer
 # than this many (see make_ball for the reason). This will also be the number
 # of points in each bottom-level ball.
-NUM_SUBBALLS = 10
+NUM_SUBBALLS = 100
 # The K in KNN-search
 K_VAL = 5
 
@@ -34,7 +34,7 @@ def main():
 	# "count" is how many KNN queries we want.
 	center = (0, 0)
 	radius = 100000
-	levels = 3
+	levels = 1
 	count = 10
 
 	points = make_ball(center, radius, levels)
@@ -135,6 +135,9 @@ def write_to_file(points, queries):
 	"""
 
 	base_file = "./test_data/" + str(uuid.uuid4())
+	if len(sys.argv) is 2:
+		base_file = "./test_data/" + sys.argv[1]
+		
 	point_file = open(base_file + ".point", 'w')
 	query_file = open(base_file + ".query", 'w')
 
