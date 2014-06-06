@@ -11,11 +11,13 @@ import math
 import uuid
 import heapq
 
+
+
 # These are needed by all the recursive calls (globals suck, I know, but it's nice
 # to be able to modify program behavior by just messing with things at the top).
 
 # How much we should scale the radius of the balls when we recurse to sub-balls
-RADIUS_SCALE = .25
+RADIUS_SCALE = 4
 # How many sub-ball recursions we should try. Note that there will likely be fewer
 # than this many (see make_ball for the reason). This will also be the number
 # of points in each bottom-level ball.
@@ -25,13 +27,13 @@ K_VAL = 1
 
 def main():
 	# These parameters can be used to tweak the program behavior. "levels" is how
-	# many levels down the ball-generating will recurse, and "center", "radius"
+	# many levels down the ball-generating will recurse, "center" and "radius"
 	# together define the circle near which all the points will fall. Note that
 	# some points may fall outside of the circle, but they will be near.
-	# "count" is how many test queries we want
+	# "count" is how many test queries we want.
 	center = (0, 0)
-	radius = 10
-	levels = 1
+	radius = 100
+	levels = 2
 	count = 10
 
 	points = make_ball(center, radius, levels)
@@ -52,7 +54,10 @@ def make_ball(center, radius, level):
 		# we bottomed out the recursion, let's get some points
 		points = []
 		while len(points) < NUM_SUBBALLS:
-			new_point = (random.randint(-radius, radius), random.randint(-radius, radius))
+			new_point = (
+				center[0] + random.randint(-radius, radius),
+				center[1] + random.randint(-radius, radius)
+				)
 			if distance(center, new_point) < radius:
 				points.append(new_point)
 		return points
@@ -69,7 +74,8 @@ def make_ball(center, radius, level):
 			else:
 				sub_balls.append(new_center)
 
-		return [make_ball(b, radius/RADIUS_SCALE, level-1) for b in sub_balls]
+		new_points = [make_ball(b, radius/RADIUS_SCALE, level-1) for b in sub_balls]
+		return [p for points in new_points for p in points]
 
 
 def get_queries(points, count, bound=1000):
@@ -85,7 +91,7 @@ def get_queries(points, count, bound=1000):
 	queries = []
 
 	for x in range(count):
-		query = (random.randint(-count, count), random.randint(-count, count))
+		query = (random.randint(-bound, bound), random.randint(-bound, bound))
 
 		# Now we need the k nearest neighbors to our query, in points. Python
 		# priority queues are SUPER hack-y, but we'll deal with it
