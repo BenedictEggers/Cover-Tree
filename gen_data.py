@@ -9,6 +9,7 @@
 import random
 import math
 import uuid
+import heapq
 
 # These are needed by all the recursive calls (globals suck, I know, but it's nice
 # to be able to modify program behavior by just messing with things at the top).
@@ -19,22 +20,22 @@ RADIUS_SCALE = .25
 # than this many (see make_ball for the reason). This will also be the number
 # of points in each bottom-level ball.
 NUM_SUBBALLS = 10
+# The K in KNN-search
+K_VAL = 1
 
 def main():
 	# These parameters can be used to tweak the program behavior. "levels" is how
 	# many levels down the ball-generating will recurse, and "center", "radius"
 	# together define the circle near which all the points will fall. Note that
-	# some points may fall outside of the circle, but they will be near. "k" is
-	# the number of nearest-neighbors we want for each point. "count" is how
-	# many test queries we want
+	# some points may fall outside of the circle, but they will be near.
+	# "count" is how many test queries we want
 	center = (0, 0)
 	radius = 10
 	levels = 1
-	k = 1
 	count = 10
 
 	points = make_ball(center, radius, levels)
-	queries = get_queries(points, count, k, radius)
+	queries = get_queries(points, count, radius)
 
 	write_to_file(points, queries)
 
@@ -70,7 +71,8 @@ def make_ball(center, radius, level):
 
 		return [make_ball(b, radius/RADIUS_SCALE, level-1) for b in sub_balls]
 
-def get_queries(points, count, k, bound=1000):
+
+def get_queries(points, count, bound=1000):
 	"""
 	Takes in a list of points, and makes some test queries on it. The optional
 	bound parameter is to tell the function within what range the query points
@@ -84,6 +86,23 @@ def get_queries(points, count, k, bound=1000):
 
 	for x in range(count):
 		query = (random.randint(-count, count), random.randint(-count, count))
+
+		# Now we need the k nearest neighbors to our query, in points. Python
+		# priority queues are SUPER hack-y, but we'll deal with it
+		ans = []
+		heap = []
+		for p in points:
+			heap.append((distance(query, p), p))
+		heapq.heapify(heap)
+
+		k = K_VAL
+		while k + 1 < len(heap) and heap[k][0] == heap[k+1][0]:
+			k += 1
+
+		for x in range(k):
+			ans.append(heap[x][1])
+
+		queries.append((query, ans))
 
 	return queries
 
@@ -104,6 +123,7 @@ def write_to_file(points, queries):
 		querypoint_2
 		...
 	"""
+
 	base_file = "./test_data/" + str(uuid.uuid4())
 	point_file = open(base_file + ".point", 'w')
 	query_file = open(base_file + ".query", 'w')
@@ -111,20 +131,26 @@ def write_to_file(points, queries):
 	for p in points:
 		write_point(point_file, p)
 
-	query_file.write(str(k) + '\n')
+	query_file.write(str(K_VAL) + '\n')
 	for q in queries:
 		write_point(query_file, q[0])  # write the actual query...
-		for ans in queries[1]:  # ...followed by all its answers
+		for ans in q[1]:  # ...followed by all its answers
 			write_point(query_file, ans)
+
+	point_file.close()
+	query_file.close()
+
 
 # Write the point out to the file in a format our stuff can parse
 def write_point(file, point):
 	p = str(point[0]) + ", " + str(point[1])
 	file.write(p + '\n')	
 
+
 # Get the distance between two 2-tuples
 def distance(point1, point2):
 	return math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
+
 
 if __name__ == "__main__":
 	main()
