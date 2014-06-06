@@ -8,6 +8,7 @@
 
 import random
 import math
+import uuid
 
 # These are needed by all the recursive calls (globals suck, I know, but it's nice
 # to be able to modify program behavior by just messing with things at the top).
@@ -56,15 +57,14 @@ def make_ball(center, radius, level):
 		return points
 
 	else:
-		# We need to recurse. We're going to make up to 10 balls of radius r/4,
-		# placing them randomly within our ball.
 		sub_balls = []
 		for x in range(NUM_SUBBALLS):
 			# It'd be nice to get these all in the circle, but whatever
 			new_center = (random.randint(-radius, radius), random.randint(-radius, radius))
 			for old_center in sub_balls:
 				# make sure there are no conflicts
-				break if distance(old_center, new_center) < radius / RADIUS_SCALE:
+				if distance(old_center, new_center) < radius / RADIUS_SCALE:
+					break
 			else:
 				sub_balls.append(new_center)
 
@@ -85,7 +85,41 @@ def get_queries(points, count, k, bound=1000):
 	for x in range(count):
 		query = (random.randint(-count, count), random.randint(-count, count))
 
+	return queries
 
+
+def write_to_file(points, queries):
+	"""
+	Write out the passed points to the file, then the passed queries to another
+	file. The files will have some random name and will be in the ./test_data
+	directory. The points file will have the extension .point, and the query
+	file will have the extension .query. The points file will just have one
+	point per line, as comma-separated values. The query file will have an integer
+	at the top representing k, then some number of points. The order will be:
+		querypoint_1
+		knn_1
+		knn_2
+		...
+		knn_k
+		querypoint_2
+		...
+	"""
+	base_file = "./test_data/" + str(uuid.uuid4())
+	point_file = open(base_file + ".point", 'w')
+	query_file = open(base_file + ".query", 'w')
+
+	for p in points:
+		write_point(point_file, p)
+
+	for q in queries:
+		write_point(query_file, q)
+
+# Write the point out to the file in a format our stuff can parse
+def write_point(file, point):
+	p = str(point[0]) + ", " + str(point[1])
+	file.write(p + '\n')	
+
+# Get the distance between two 2-tuples
 def distance(point1, point2):
 	return math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
 
