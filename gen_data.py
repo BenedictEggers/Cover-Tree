@@ -4,7 +4,7 @@
 # This script generates data for use in testing the cover tree. It generates
 # points in balls in the plane, sometimes recursing into those balls to generate
 # their data in sub-balls and (sub-)*balls. It also generates some test queries,
-# and writes everything out to a file in "./test_data/".
+# and writes everything out to files in "./test_data/".
 
 import random
 import math
@@ -17,7 +17,7 @@ import heapq
 # to be able to modify program behavior by just messing with things at the top).
 
 # How much we should scale the radius of the balls when we recurse to sub-balls
-RADIUS_SCALE = 4
+RADIUS_SCALE = 10
 # How many sub-ball recursions we should try. Note that there will likely be fewer
 # than this many (see make_ball for the reason). This will also be the number
 # of points in each bottom-level ball.
@@ -30,9 +30,9 @@ def main():
 	# many levels down the ball-generating will recurse, "center" and "radius"
 	# together define the circle near which all the points will fall. Note that
 	# some points may fall outside of the circle, but they will be near.
-	# "count" is how many test queries we want.
+	# "count" is how many KNN queries we want.
 	center = (0, 0)
-	radius = 100
+	radius = 10000
 	levels = 2
 	count = 10
 
@@ -101,11 +101,11 @@ def get_queries(points, count, bound=1000):
 			heap.append((distance(query, p), p))
 		heapq.heapify(heap)
 
-		k = K_VAL
+		k = K_VAL - 1
 		while k + 1 < len(heap) and heap[k][0] == heap[k+1][0]:
 			k += 1
 
-		for x in range(k):
+		for x in range(k + 1):
 			ans.append(heap[x][1])
 
 		queries.append((query, ans))
@@ -121,6 +121,7 @@ def write_to_file(points, queries):
 	file will have the extension .query. The points file will just have one
 	point per line, as comma-separated values. The query file will have an integer
 	at the top representing k, then some number of points. The order will be:
+		k
 		querypoint_1
 		knn_1
 		knn_2
@@ -153,7 +154,7 @@ def write_point(file, point):
 	file.write(p + '\n')	
 
 
-# Get the distance between two 2-tuples
+# Get the distance between two 2-tuples (points)
 def distance(point1, point2):
 	return math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
 

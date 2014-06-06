@@ -13,3 +13,6 @@ stats: statistics.cc Cover_Tree.h Cover_Tree_Point.o
 
 clean:
 	rm -f *.o test statistics
+
+clobber: clean
+	rm -f test_data/*
