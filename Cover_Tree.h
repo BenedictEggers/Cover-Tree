@@ -2,7 +2,7 @@
  * Copyright (C) 2011 by Singularity Institute for Artificial Intelligence
  * All Rights Reserved
  *
- * Written by David Crane <dncrane@gmail.com
+ * Written by David Crane <dncrane@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License v3 as
