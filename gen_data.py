@@ -67,8 +67,8 @@ def make_ball(center, radius, level):
 		for x in range(NUM_SUBBALLS):
 			# It'd be nice to get these all in the circle, but whatever
 			new_center = (
-				center + random.randint(-radius, radius),
-				center + random.randint(-radius, radius))
+				center[0] + random.randint(-radius, radius),
+				center[1] + random.randint(-radius, radius))
 			for old_center in sub_balls:
 				# make sure there are no conflicts
 				if distance(old_center, new_center) < radius / RADIUS_SCALE:
