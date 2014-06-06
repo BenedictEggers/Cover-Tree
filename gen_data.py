@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Ben Eggers <ben.eggers36@gmail.com>
 # GNU GPL'd
 
@@ -71,7 +72,7 @@ def make_ball(center, radius, level):
 				center[1] + random.randint(-radius, radius))
 			for old_center in sub_balls:
 				# make sure there are no conflicts
-				if distance(old_center, new_center) < radius / RADIUS_SCALE:
+				if distance(old_center, new_center) < radius / RADIUS_SCALE * 2:
 					break
 			else:
 				sub_balls.append(new_center)
