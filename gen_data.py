@@ -15,7 +15,8 @@ import math
 # How much we should scale the radius of the balls when we recurse to sub-balls
 RADIUS_SCALE = .25
 # How many sub-ball recursions we should try. Note that there will likely be fewer
-# than this many (see make_ball for the reason).
+# than this many (see make_ball for the reason). This will also be the number
+# of points in each bottom-level ball.
 NUM_SUBBALLS = 10
 
 def main():
@@ -47,7 +48,12 @@ def make_ball(center, radius, level):
 	"""
 	if level is 1:
 		# we bottomed out the recursion, let's get some points
-		
+		points = []
+		while len(points) < NUM_SUBBALLS:
+			new_point = (random.randint(-radius, radius), random.randint(-radius, radius))
+			if distance(center, new_point) < radius:
+				points.append(new_point)
+		return points
 
 	else:
 		# We need to recurse. We're going to make up to 10 balls of radius r/4,
@@ -55,12 +61,12 @@ def make_ball(center, radius, level):
 		sub_balls = []
 		for x in range(NUM_SUBBALLS):
 			# It'd be nice to get these all in the circle, but whatever
-			new_ball = (random.randint(-radius, radius), random.randint(-radius, radius))
-			for old_ball in sub_balls:
+			new_center = (random.randint(-radius, radius), random.randint(-radius, radius))
+			for old_center in sub_balls:
 				# make sure there are no conflicts
-				break if distance(old_ball, new_ball) < radius / RADIUS_SCALE:
+				break if distance(old_center, new_center) < radius / RADIUS_SCALE:
 			else:
-				sub_balls.append(new_ball)
+				sub_balls.append(new_center)
 
 		return [make_ball(b, radius/RADIUS_SCALE, level-1) for b in sub_balls]
 
@@ -80,8 +86,8 @@ def get_queries(points, count, k, bound=1000):
 		query = (random.randint(-count, count), random.randint(-count, count))
 
 
-def distance(ball1, ball2):
-	return math.sqrt((ball2[0] - ball1[0])**2 + (ball2[1] - ball1[1])**2)
+def distance(point1, point2):
+	return math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
 
 if __name__ == "__main__":
 	main()
