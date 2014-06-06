@@ -40,15 +40,8 @@ for x in xrange(0, len(queries), k + 1):
 	answers = current[1:]
 
 	plt.plot(query[0], query[1], 'ko')
-	max_radius = 0
 	for a in answers:
 		plt.plot(a[0], a[1], 'bo')
-
-		dist = distance(query, a)
-		if dist > max_radius:
-			max_radius = dist
-	circle = plt.Circle(query, max_radius, color='k', fill=False)
-	plt.gcf().gca().add_artist(circle)
 
 
 plt.show()

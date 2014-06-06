@@ -18,13 +18,13 @@ import heapq
 # to be able to modify program behavior by just messing with things at the top).
 
 # How much we should scale the radius of the balls when we recurse to sub-balls
-RADIUS_SCALE = 10
+RADIUS_SCALE = 4
 # How many sub-ball recursions we should try. Note that there will likely be fewer
 # than this many (see make_ball for the reason). This will also be the number
 # of points in each bottom-level ball.
 NUM_SUBBALLS = 10
 # The K in KNN-search
-K_VAL = 1
+K_VAL = 5
 
 def main():
 	# These parameters can be used to tweak the program behavior. "levels" is how
@@ -33,8 +33,8 @@ def main():
 	# some points may fall outside of the circle, but they will be near.
 	# "count" is how many KNN queries we want.
 	center = (0, 0)
-	radius = 10000
-	levels = 2
+	radius = 100000
+	levels = 3
 	count = 10
 
 	points = make_ball(center, radius, levels)
