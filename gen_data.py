@@ -1,4 +1,4 @@
-# Ben Eggers
+# Ben Eggers <ben.eggers36@gmail.com>
 # GNU GPL'd
 
 # This script generates data for use in testing the cover tree. It generates
@@ -66,7 +66,9 @@ def make_ball(center, radius, level):
 		sub_balls = []
 		for x in range(NUM_SUBBALLS):
 			# It'd be nice to get these all in the circle, but whatever
-			new_center = (random.randint(-radius, radius), random.randint(-radius, radius))
+			new_center = (
+				center + random.randint(-radius, radius),
+				center + random.randint(-radius, radius))
 			for old_center in sub_balls:
 				# make sure there are no conflicts
 				if distance(old_center, new_center) < radius / RADIUS_SCALE:
