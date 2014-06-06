@@ -111,8 +111,11 @@ def write_to_file(points, queries):
 	for p in points:
 		write_point(point_file, p)
 
+	query_file.write(str(k) + '\n')
 	for q in queries:
-		write_point(query_file, q)
+		write_point(query_file, q[0])  # write the actual query...
+		for ans in queries[1]:  # ...followed by all its answers
+			write_point(query_file, ans)
 
 # Write the point out to the file in a format our stuff can parse
 def write_point(file, point):
