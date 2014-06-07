@@ -97,19 +97,19 @@ def get_queries(points, count, bound=1000):
 		query = (random.randint(-bound, bound), random.randint(-bound, bound))
 
 		# Now we need the k nearest neighbors to our query, in points. Python
-		# priority queues are SUPER hack-y, but we'll deal with it
+		# priority queues are SUPER hacky, but we'll deal with it
 		ans = []
-		heap = []
+		sorted_points = []
 		for p in points:
-			heap.append((distance(query, p), p))
-		heapq.heapify(heap)
+			sorted_points.append((distance(query, p), p))
+		sorted_points.sort()
 
 		k = K_VAL - 1
-		while k + 1 < len(heap) and heap[k][0] == heap[k+1][0]:
+		while k + 1 < len(sorted_points) and sorted_points[k][0] == sorted_points[k+1][0]:
 			k += 1
 
 		for x in range(k + 1):
-			ans.append(heap[x][1])
+			ans.append(sorted_points[x][1])
 
 		queries.append((query, ans))
 
