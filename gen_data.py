@@ -18,13 +18,13 @@ import sys
 # to be able to modify program behavior by just messing with things at the top).
 
 # How much we should scale the radius of the balls when we recurse to sub-balls
-RADIUS_SCALE = 4
+RADIUS_SCALE = 3
 # How many sub-ball recursions we should try. Note that there will likely be fewer
 # than this many (see make_ball for the reason). This will also be the number
 # of points in each bottom-level ball.
-NUM_SUBBALLS = 100
+NUM_SUBBALLS = 500
 # The K in KNN-search
-K_VAL = 5
+K_VAL = 10
 
 def main():
 	# These parameters can be used to tweak the program behavior. "levels" is how
@@ -35,7 +35,7 @@ def main():
 	center = (0, 0)
 	radius = 100000
 	levels = 1
-	count = 10
+	count = 100
 
 	points = make_ball(center, radius, levels)
 	queries = get_queries(points, count, radius)
